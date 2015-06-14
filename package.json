@@ -1,0 +1,25 @@
+{
+  "name": "gulp-iget-static",
+  "version": "1.0.0",
+  "description": "iget string replacement with localized",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha ./test/test.js"
+  },
+  "author": "Nick Delitski",
+  "license": "ISC",
+  "devDependencies": {
+    "babel": "^5.5.8",
+    "chai": "^3.0.0",
+    "gulp": "^3.9.0",
+    "gulp-jsoncombine": "^1.0.2",
+    "mocha": "^2.2.5"
+  },
+  "dependencies": {
+    "bluebird": "^2.9.30",
+    "gulp-util": "^3.0.5",
+    "lodash": "^3.9.3",
+    "request": "^2.57.0",
+    "through2": "^2.0.0"
+  }
+}
