@@ -1,10 +1,10 @@
 # gulp-iget
 gather all iget's from files, send them to localization app, output json translations per file
-==Install
+# Install
 ```
  npm i -D git+ssh://git@github.com:SyncCloud/gulp-iget.git
 ```
-==Usage
+# Usage
 ```js
 gulp.task('locale', function () {
     return gulp.src(['./templates/**/*.jade', './blocks/**/*.jade'])
