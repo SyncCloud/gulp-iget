@@ -11,6 +11,7 @@
   "devDependencies": {
     "babel": "^5.5.8",
     "chai": "^3.0.0",
+    "ghooks": "^0.3.2",
     "gulp": "^3.9.0",
     "mocha": "^2.2.5"
   },
@@ -23,5 +24,10 @@
     "request": "^2.57.0",
     "string-stream": "0.0.7",
     "through2": "^2.0.0"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run test"
+    }
   }
 }
