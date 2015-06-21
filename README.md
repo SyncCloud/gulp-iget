@@ -23,6 +23,7 @@ gulp.task('locale-push', function () {
 ```
 ### check
 Check strings for completeness. Show missed strings in files and fail
+@param languages {Array} - list of translation languages
 ```js
 gulp.task('locale-check', function () {
     return gulp.src(['./templates/**/*.jade', './blocks/**/*.jade'])
