@@ -1,22 +1,40 @@
 # gulp-iget
-gather all iget's from files, send them to localization app, output json translations per file
+Gulp commands for i18n project
 # Install
 ```
  npm i -D git+ssh://git@github.com:SyncCloud/gulp-iget.git
 ```
-# Usage
+
+# Commands
+On a top of gulpfile.
 ```js
-gulp.task('locale', function () {
+var iget = require('gulp-iget')({
+    project: 'some-project',
+    backend: 'http://locale-api.com'
+})
+```
+### push
+Push strings to server for future translate
+```js
+gulp.task('locale-push', function () {
     return gulp.src(['./templates/**/*.jade', './blocks/**/*.jade'])
-        .pipe(iget({
-          project: 'some-project',
-          backend: 'http://locale-api.com'
-        }))
-        .pipe(jsonConcat('locales.json', function (data) {
-            return new Buffer(JSON.stringify(_.values(data).reduce(function (sum, dic) {
-                return _.assign(sum, dic)
-            }, {}), null, 4));
-        }))
-        .pipe(gulp.dest('static'))
+        .pipe(iget.push())
+});
+```
+### check
+Check strings for completeness. Show missed strings in files and fail
+```js
+gulp.task('locale-check', function () {
+    return gulp.src(['./templates/**/*.jade', './blocks/**/*.jade'])
+        .pipe(iget.check())
+});
+```
+```
+### pull
+Pull latest translations from server.
+```js
+gulp.task('locale-pull', function () {
+    return iget.pull()
+        .pipe(gulp.dest('dist/static'))
 });
 ```
