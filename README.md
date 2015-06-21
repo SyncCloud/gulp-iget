@@ -29,7 +29,6 @@ gulp.task('locale-check', function () {
         .pipe(iget.check())
 });
 ```
-```
 ### pull
 Pull latest translations from server.
 ```js
