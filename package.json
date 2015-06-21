@@ -1,7 +1,7 @@
 {
-  "name": "gulp-iget-static",
+  "name": "gulp-iget",
   "version": "1.0.0",
-  "description": "iget string replacement with localized",
+  "description": "iget gulp commands",
   "main": "lib/index.js",
   "scripts": {
     "test": "node_modules/.bin/mocha ./test/test.js"
@@ -12,14 +12,16 @@
     "babel": "^5.5.8",
     "chai": "^3.0.0",
     "gulp": "^3.9.0",
-    "gulp-jsoncombine": "^1.0.2",
     "mocha": "^2.2.5"
   },
   "dependencies": {
     "bluebird": "^2.9.30",
+    "duplexify": "^3.4.2",
     "gulp-util": "^3.0.5",
+    "iget": "git://github.com/SyncCloud/iget.git",
     "lodash": "^3.9.3",
     "request": "^2.57.0",
+    "string-stream": "0.0.7",
     "through2": "^2.0.0"
   }
 }

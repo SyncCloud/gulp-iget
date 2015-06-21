@@ -1,7 +1,7 @@
 var fs = require('fs'),
 	gulp = require('gulp'),
 	_ = require('lodash'),
-	jsonConcat = require('gulp-jsoncombine'),
+    path = require('path'),
 	iget = require('../lib/index')({
 		project: 'synccloud-frontend',
 		backend: 'http://localhost:3000'
@@ -14,28 +14,38 @@ var fs = require('fs'),
 process.chdir('./test');
 
 describe('gulp-iget-static', function() {
-	it('should done', function(done) {
-		var template = './templates/*.jade',
-			out = gulp.dest('./tmp');
+    var src = './templates/*.jade';
 
-		out.on('end', function() {
-			fs.readFile('./tmp/merged.json', function(err, file) {
-				console.log(file.toString());
-				done();
-			});
-		});
-
-		gulp.src(template)
-			.pipe(iget)
-			.pipe(jsonConcat('merged.json', function (data) {
-				return new Buffer(JSON.stringify(_.values(data).reduce(function (sum, dic) {
-					return _.assign(sum, dic)
-				}, {}), null, 4));
-			}))
-			.pipe(out);
+    it('should fail on checking for incompleteness', function(done) {
+		gulp.src(src)
+			.pipe(iget.check())
+            .on('error', function() {
+                done();
+            });
 	});
 
-	it('should not fail on file without iget', function(done) {
-
+	it('should push new strings to server', function(done) {
+        gulp.src(src)
+            .pipe(iget.push())
+            .on('finish', function () {
+                done();
+            });
 	});
+
+    it('should pull strings from server to local file', function(done) {
+        var localesFilePath = path.join(__dirname, 'tmp/locales.json');
+
+        if (fs.existsSync(localesFilePath)) {
+            fs.unlinkSync(localesFilePath);
+        }
+    	iget.pull()
+            .pipe(gulp.dest('tmp'))
+            .on('end', function () {
+                var result = fs.readFileSync(localesFilePath, 'utf8');
+
+                result = JSON.parse(result);
+                expect(result).to.have.all.keys('ru_Отмена', 'ru_Мои', 'en_Delegated');
+                done();
+            });
+    });
 });
