@@ -3,7 +3,7 @@ var fs = require('fs'),
     _ = require('lodash'),
     path = require('path'),
     iget = require('../lib/index')({
-        project: 'synccloud-frontend',
+        project: 'iget-tests',
         backend: 'http://localhost:3000'
     }),
     through = require('through2'),
@@ -17,7 +17,7 @@ process.chdir('./test');
 describe('gulp-iget-static', function () {
     var src = './templates/*.jade';
 
-    it.skip('should fail on checking for incompleteness', function (done) {
+    it('should fail on checking for incompleteness', function (done) {
         gulp.src(src)
             .pipe(iget.check())
             .on('error', function () {
@@ -25,7 +25,7 @@ describe('gulp-iget-static', function () {
             });
     });
 
-    it.skip('should push new strings to server', function (done) {
+    it('should push new strings to server', function (done) {
         gulp.src(src)
             .pipe(iget.push())
             .on('finish', function () {
@@ -33,7 +33,7 @@ describe('gulp-iget-static', function () {
             });
     });
 
-    it.skip('should pull strings from server to local file', function (done) {
+    it('should pull strings from server to local file', function (done) {
         var localesFilePath = path.join(__dirname, 'tmp/locales.json');
 
         if (fs.existsSync(localesFilePath)) {
@@ -45,7 +45,7 @@ describe('gulp-iget-static', function () {
                 var result = fs.readFileSync(localesFilePath, 'utf8');
 
                 result = JSON.parse(result);
-                expect(result).to.have.all.keys('ru_Отмена', 'ru_Мои', 'en_Delegated');
+                expect(result).to.have.all.keys('ru_Отмена', 'ru_Мои', 'en_Delegated', "en_Couldn't read", "en_Couldn\\'t read", "en_\"winter is comming\"");
                 done();
             });
     });
@@ -55,35 +55,25 @@ describe('gulp-iget-static', function () {
             gulp.src('./templates/scan.jade')
                 .pipe(iget.scan())
                 .pipe(through.obj(function (data) {
-                    expect(data).to.deep.equal({
-                        en: {
-                            'Couldn\'t read': '',
-                            'Couldn\\\'t read': '',
-                            '"winter is comming"': ''
-                        }
-                    });
+                    expect(data).to.have.members([
+                        'en_Couldn\'t read',
+                        'en_Couldn\\\'t read',
+                        'en_"winter is comming"'
+                    ]);
                     done();
                 }))
         });
     });
 
     describe('iget regex', function () {
-        var re = /iget[\.]?(?:\w{2})?\((.*)\)/gi,
-            keyRe = /\(['"](.*)['"](?:,.*)?\)/,
-            localeRe = /iget[\.]?(\w{2})/;
+        var extract = require('../lib/extract')({defaultLocale: 'ru'}),
+            str;
 
-        var str = 'sd \niget.en(\'"winter )\'""is comming"\')\n sdfsd';
+        str = extract('sd \niget.en(\'"winter \'""is comming"\')\n sdfsd')[0];
+        expect(str).to.equal('en_"winter \'""is comming"');
 
-        str.match(re).forEach(function (m) {
-            expect(m).to.equal('iget.en(\'"winter )\'""is comming"\')');
-            expect(m.match(keyRe)[1]).to.equal('"winter )\'""is comming"');
-        });
+        str = extract("sd \n iget('отредактировал подзадачу %s', event.childTask.name)('sdfsd')(href='http://google.com')\n sdfs;\ndfsd")[0];
+        expect(str).to.equal('ru_отредактировал подзадачу %s');
 
-        str = "sd \n iget('отредактировал подзадачу %s', event.childTask.name)\n sdfs;\ndfsd";
-
-        str.match(re).forEach(function (m) {
-            expect(m).to.equal("iget('отредактировал подзадачу %s', event.childTask.name)");
-            expect(m.match(keyRe)[1]).to.equal('отредактировал подзадачу %s');
-        });
     });
 });
