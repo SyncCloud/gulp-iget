@@ -69,15 +69,21 @@ describe('gulp-iget-static', function () {
 
     describe('iget regex', function () {
         var re = /iget[\.]?(?:\w{2})?\((.*)\)/gi,
-            keyRe = /\(['"](.*)['"]\)/,
+            keyRe = /\(['"](.*)['"](?:,.*)?\)/,
             localeRe = /iget[\.]?(\w{2})/;
 
-        str = 'sd \niget.en(\'"winter )\'""is comming"\')\n sdfsd';
+        var str = 'sd \niget.en(\'"winter )\'""is comming"\')\n sdfsd';
 
         str.match(re).forEach(function (m) {
             expect(m).to.equal('iget.en(\'"winter )\'""is comming"\')');
             expect(m.match(keyRe)[1]).to.equal('"winter )\'""is comming"');
         });
 
+        str = "sd \n iget('отредактировал подзадачу %s', event.childTask.name)\n sdfs;\ndfsd";
+
+        str.match(re).forEach(function (m) {
+            expect(m).to.equal("iget('отредактировал подзадачу %s', event.childTask.name)");
+            expect(m.match(keyRe)[1]).to.equal('отредактировал подзадачу %s');
+        });
     });
 });
