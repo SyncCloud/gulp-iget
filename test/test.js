@@ -56,9 +56,9 @@ describe('gulp-iget-static', function () {
                 .pipe(iget.scan())
                 .pipe(through.obj(function (data) {
                     expect(data).to.have.members([
-                        'en_Couldn\'t read',
-                        'en_Couldn\\\'t read',
-                        'en_"winter is comming"'
+                        'en_Couldn\'t read', //handle inner quote
+                        'en_Couldn\'t read', // handle inner escaped quotes
+                        'en_"winter is comming"' //handle double quotes
                     ]);
                     done();
                 }))
@@ -69,7 +69,7 @@ describe('gulp-iget-static', function () {
         var extract = require('../lib/extract')({defaultLocale: 'ru'}),
             str;
 
-        str = extract('sd \niget.en(\'"winter \'""is comming"\')\n sdfsd')[0];
+        str = extract('sd \niget.en(\'"winter \\\'""is comming"\')\n sdfsd')[0];
         expect(str).to.equal('en_"winter \'""is comming"');
 
         str = extract("sd \n iget('отредактировал подзадачу %s', event.childTask.name)('sdfsd')(href='http://google.com')\n sdfs;\ndfsd")[0];
