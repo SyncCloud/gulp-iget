@@ -1,5 +1,5 @@
 {
-  "name": "gulp-iget",
+  "name": "@synccloud/gulp-iget",
   "version": "1.0.0",
   "description": "iget gulp commands",
   "main": "lib/index.js",
@@ -19,7 +19,7 @@
     "bluebird": "^2.9.30",
     "duplexify": "^3.4.2",
     "gulp-util": "^3.0.5",
-    "iget": "git://github.com/SyncCloud/iget.git",
+    "@synccloud/iget": "^0.1.0",
     "lodash": "^3.9.3",
     "request": "^2.57.0",
     "string-stream": "0.0.7",
