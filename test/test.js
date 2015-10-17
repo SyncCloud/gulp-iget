@@ -14,7 +14,7 @@ var fs = require('fs'),
 // node lives in one process/scope/directory
 process.chdir('./test');
 
-describe('gulp-iget-static', function () {
+describe.skip('gulp-iget-static', function () {
     var src = './templates/*.jade';
 
     it('should fail on checking for incompleteness', function (done) {
