@@ -31,7 +31,7 @@ gulp.task('locale-check', function () {
 });
 ```
 ### pull
-Pull latest translations from server.
+Pull latest translations from server and save to a json file. Useful when you want to bundle strings with your project without need of pulling strings at application startup from a server 
 ```js
 gulp.task('locale-pull', function () {
     return iget.pull()
