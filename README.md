@@ -1,8 +1,10 @@
 # gulp-iget
+
 Gulp commands for i18n project
+
 # Install
 ```
- npm i -D git+ssh://git@github.com:SyncCloud/gulp-iget.git
+npm i -D gulp-iget
 ```
 
 # Commands
