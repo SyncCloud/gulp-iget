@@ -18,6 +18,7 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
+    "iget": "^0.3.0",
     "babel": "^5.5.8",
     "chai": "^3.0.0",
     "gulp": "^3.9.0",
