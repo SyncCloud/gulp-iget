@@ -12,7 +12,7 @@ publish:
     email: $$NPM_EMAIL
     when:
       event: tag
-cache:
-  mount:
-    - node_modules
-    - .git
+#cache:
+#  mount:
+#    - node_modules
+#    - .git
