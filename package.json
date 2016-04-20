@@ -1,6 +1,6 @@
 {
   "name": "gulp-iget",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "iget gulp commands",
   "main": "lib/index.js",
   "scripts": {
