@@ -18,13 +18,13 @@
     "through2": "^2.0.0"
   },
   "devDependencies": {
-    "iget": "^0.3.0",
+    "iget": "^0.3.1",
     "babel": "^5.5.8",
     "chai": "^3.0.0",
     "gulp": "^3.9.0",
     "mocha": "^2.2.5"
   },
   "peerDependencies": {
-    "iget": ">= 0.3.0"
+    "iget": ">= 0.3.1"
   }
 }
